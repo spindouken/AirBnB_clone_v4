@@ -16,13 +16,14 @@ header {
 
 #api_status {
     position: absolute;
-    transform: translate(-50%, 40%);
     right: 30px;
+    top: 15px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #CCC;
+    background-color: #CCCCCC;
 }
-#api_status.available {
-    background-color: #ff545f;
+
+.available {
+  background-color: #ff545f;
 }
