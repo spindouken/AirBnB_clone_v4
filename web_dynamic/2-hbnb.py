@@ -12,7 +12,7 @@ import uuid
 app = Flask(__name__)
 
 
-@app.route("/2-hbnb", strict_slashes=False)
+@app.route("/2-hbnb/", strict_slashes=False)
 def hbnb():
     """Display a HTML page with filters for states, amenities, and places"""
     states = storage.all(State)
