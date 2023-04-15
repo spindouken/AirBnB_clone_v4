@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Mason Counts - [Github](https://github.com/spindouken) / [Other Handles](https://)  
-Jared Glass - [Github](https://github.com/Jaredglass3) / [Other Handles](https://)
+Heather Hayes - [Github](https://github.com/hayes28) / [Other Handles](https://)
 
 ## License
 Public Domain. No copy write protection.
