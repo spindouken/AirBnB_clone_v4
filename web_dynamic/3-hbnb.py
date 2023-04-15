@@ -1,42 +1,38 @@
 #!/usr/bin/python3
-"""Starting flask app"""
+"""Script that starts a Flask web application
+listening on 0.0.0.0:5000
+"""
 from flask import Flask, render_template
 from models import storage
-import uuid
 from models.state import State
+from models.city import City
 from models.amenity import Amenity
 from models.place import Place
-from models.city import City
-from models.user import User
-
-
-"""flask req"""
+import uuid
 app = Flask(__name__)
 
 
+@app.route("/3-hbnb/", strict_slashes=False)
+def hbnb():
+    """Display an HTML page with filters for states, amenities, and places"""
+    states = storage.all(State)
+    sorted_states_list = sorted(states.values(), key=lambda state: state.name)
+    amenities = storage.all(Amenity)
+    sorted_amenities_list = sorted(amenities.values(), key=lambda amenity: amenity.name)
+    places = storage.all(Place)
+    sorted_places_list = sorted(places.values(), key=lambda place: place.name)
+    return render_template('3-hbnb.html',
+                           states=sorted_states_list,
+                           amenities=sorted_amenities_list,
+                           places=sorted_places_list,
+                           cache_id = str(uuid.uuid4()))
+
+
 @app.teardown_appcontext
-def teardown_db(exception):
-    """close after"""
+def close_storage(exception):
+    """Remove the current SQLAlchemy Session"""
     storage.close()
 
 
-@app.route('/3-hbnb', strict_slashes=False)
-def hbnb_filters(the_id=None):
-    """routing for 0-hbnb"""
-    state_objs = storage.all(State).values()
-    states = dict([state.name, state] for state in state_objs)
-    amenities = storage.all(Amenity).values()
-    places = storage.all(Place).values()
-    users = dict([user.id, "{} {}".format(user.first_name, user.last_name)]
-                 for user in storage.all(User).values())
-    cache_id = (str(uuid.uuid4()))
-    return render_template('3-hbnb.html',
-                           states=states,
-                           amens=amenities,
-                           places=places,
-                           users=users,
-                           cache_id=cache_id)
-
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host="0.0.0.0", port="5000")
