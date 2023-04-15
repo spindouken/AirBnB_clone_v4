@@ -9,3 +9,11 @@ footer {
     justify-content: center;
     align-items: center;
 }
+footer p {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    top: 0;
+    right: 0;
+    left: 0;
+}
