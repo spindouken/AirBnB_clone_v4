@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  const api = 'http://' + window.location.hostname;
   const dict = {};
   $(document).on('change', "input[type='checkbox']", function () {
     if (this.checked) {
@@ -13,56 +14,88 @@ $(document).ready(function () {
     $('.amenities h4').text(amenList.join(', '));
   });
 
-  $.get('http://127.0.0.1:5001/api/v1/status/', function (data) {
-    if (data.status === 'OK') {
-      $('#api_status').addClass('available');
-    } else {
-      $('#api_status').removeClass('available');
-    }
-  });
-
-  function getPlaces(amenities) {
-    const data = JSON.stringify({ amenities: amenities });
-    $.ajax({
-      url: 'http://127.0.0.1:5001/api/v1/places_search/',
-      type: 'POST',
-      contentType: 'application/json',
-      data: data,
-      success: function (data) {
-        $('section.places').empty();
-        for (const place of data) {
-          $.get('http://127.0.0.1:5001/api/v1/users/' + place.user_id, function (userData) {
-            const html = `<article>
-              <div class="title_box">
-                <h2>${place.name}</h2>
-                <div class="price_by_night">$${place.price_by_night}</div>
-              </div>
-              <div class="information">
-                <div class="max_guest">${place.max_guest} Guests</div>
-                <div class="number_rooms">${place.number_rooms} Bedrooms</div>
-                <div class="number_bathrooms">${place.number_bathrooms} Bathrooms</div>
-              </div>
-              <div class="user">
-                <strong>Owner: ${userData.first_name} ${userData.last_name}</strong>
-              </div>
-              <div class="description">
-                ${place.description}
-              </div>
-            </article>`;
-            $('section.places').append(html);
-          });
-        }
-      }
-    });
-  }
-
-  // initial load of places
-  getPlaces([]);
-
-  // filter places when button is clicked
   $('button').click(function () {
     const amenities = Object.keys(dict);
-    getPlaces(amenities);
+    const data = {'amenities': amenities};
+    fetch(api + ':5001/api/v1/places_search/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        $('section.places').empty();
+        for (const place of data) {
+          fetch(api + ':5001/api/v1/users/' + place.user_id)
+            .then(response => response.json())
+            .then(userData => {
+              const html = `<article>
+                <div class="title_box">
+                    <h2>${place.name}</h2>
+                    <div class="price_by_night">$${place.price_by_night}</div>
+                    </div>
+                    <div class="information">
+                    <div class="max_guest">${place.max_guest} Guests</div>
+                    <div class="number_rooms">${place.number_rooms} Bedrooms</div>
+                    <div class="number_bathrooms">${place.number_bathrooms} Bathrooms</div>
+                    </div>
+                    <div class="user">
+                    <strong>Owner: ${userData.first_name} ${userData.last_name}</strong>
+                    </div>
+                    <div class="description">
+                    ${place.description}
+                    </div>
+                    </article>`;
+              $('section.places').append(html);
+            });
+        }
+      });
   });
 
+  fetch(api + ':5001/api/v1/status/')
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'OK') {
+        $('#api_status').addClass('available');
+      } else {
+        $('#api_status').removeClass('available');
+      }
+    });
+
+  fetch(api + ':5001/api/v1/places_search/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({})
+  })
+    .then(response => response.json())
+    .then(data => {
+      for (const place of data) {
+        fetch(api + ':5001/api/v1/users/' + place.user_id)
+          .then(response => response.json())
+          .then(userData => {
+            const html = `<article>
+              <div class="title_box">
+                  <h2>${place.name}</h2>
+                  <div class="price_by_night">$${place.price_by_night}</div>
+                  </div>
+                  <div class="information">
+                  <div class="max_guest">${place.max_guest} Guests</div>
+                  <div class="number_rooms">${place.number_rooms} Bedrooms</div>
+                  <div class="number_bathrooms">${place.number_bathrooms} Bathrooms</div>
+                  </div>
+                  <div class="user">
+                  <strong>Owner: ${userData.first_name} ${userData.last_name}</strong>
+                  </div>
+                  <div class="description">
+                  ${place.description}
+                  </div>
+                  </article>`;
+            $('section.places').append(html);
+          });
+      }
+    });
 });
