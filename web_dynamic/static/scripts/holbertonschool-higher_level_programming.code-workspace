@@ -1,0 +1,44 @@
+{
+	"folders": [
+		{
+			"path": "../../../../holbertonschool-higher_level_programming"
+		},
+		{
+			"name": "holbertonschool-AirBnB_clone-2",
+			"path": "../../../../holbertonschool-AirBnB_clone-2"
+		},
+		{
+			"path": "../../../../testDir"
+		},
+		{
+			"name": "tests",
+			"path": "../../../../tests"
+		},
+		{
+			"name": "holbertonschool-system_engineering-devops",
+			"path": "../../../../holbertonschool-system_engineering-devops"
+		},
+		{
+			"name": "holbertonschool-AirBnB_clone_v2",
+			"path": "../../../../holbertonschool-AirBnB_clone_v2"
+		},
+		{
+			"name": "W3C-Validator",
+			"path": "../../../../W3C-Validator"
+		},
+		{
+			"name": "AirBnB_clone_v3",
+			"path": "../../../../AirBnB_clone_v3"
+		},
+		{
+			"path": "../../../.."
+		},
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../NEAT-Flappy-Bird"
+		}
+	],
+	"settings": {}
+}
