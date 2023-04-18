@@ -21,11 +21,6 @@
     margin: 20px;
     border: 1px solid #FF5A5F;
     border-radius: 4px;
-    display: flex;
-    align-content: space-between;
-    grid-row-start: 2;
-    flex-direction: row;
-    flex-wrap: wrap;
     order: 2;
 }
 
@@ -67,7 +62,7 @@
     font-size: 30px;
     text-align: center;
     height: 80px;
-    line-height: 20px;
+    line-height: 75px;
     min-width: 60px;
     width: 80px;
     display: inline-block;
@@ -105,7 +100,6 @@
 
 .places .description
 {
-    margin-top: -20px;
 }
 
 .number_bathrooms
